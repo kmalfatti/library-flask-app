@@ -1,6 +1,29 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
-<h1>Books</h1>
+{% if author %}
+  <h1>{{author.name}}'s Books</h1>
+  <a href="{{ url_for('root') }} ">Home</a>
+  <a href="{{ url_for('books_new', id=author.id) }}">Add a new book for {{author.name}}</a>
+  {% if author.books %}
+    {% for book in author.books|sort(attribute='id')  %}
+    <div class="book">
+      <a href="{{url_for('books_show', id=book.author_id, book_id=book.id )}}"><h5>{{book.title}}</h5></a>
+      <form action="{{url_for('books_edit', id=book.author_id, book_id=book.id)}}">
+        <input type="submit" value="Edit">
+      </form>
+      <form action="{{url_for('books_destroy', id=book.author_id, book_id=book.id)}}?_method=DELETE" method="POST">
+        <input type="submit" value="Delete">
+      </form>
+    </div>
+    {% else %}
+    <h2>This author has no books</h2>
+    {% endfor %}
+
+  {% endif %}
+{% else %}
+<h1>Error: this page does not exist</h1>
+{% endif %}
+
 
 {% endblock %}

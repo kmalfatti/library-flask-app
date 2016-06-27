@@ -1,5 +1,10 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
 {% block content %}
+  <h1>Add a new book for {{author.name}}!</h1>
 
+ <form action="{{ url_for('books_index', id=author.id) }}" method="POST">
+    <input type="text" name="title" placeholder="Title" autofocus>
+    <input type="submit">
+  </form>
 
 {% endblock %}

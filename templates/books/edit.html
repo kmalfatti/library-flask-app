@@ -1,5 +1,9 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-
-
+  <h1>Edit {{book.title}}</h1>
+  
+  <form action="{{ url_for('books_update', id=book.author_id, book_id=book.id )}}?_method=PATCH" method="POST">
+    <input type="text" name="title" placeholder="Title" autofocus>
+    <input type="submit">
+  </form>
 {% endblock %}
